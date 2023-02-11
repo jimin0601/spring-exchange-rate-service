@@ -14,14 +14,16 @@ import java.net.URL;
 
 @Service
 public class ExchangeService {
+    // 요청 URL
     private final String URL = "https://api.exchangerate.host/latest";
-    public ExchangeDTO testExchange(String baseCode, double amount) throws IOException {
-        // Making Request
+    // 파라미터로 통화 단위와, 금액을 받음
+    public ExchangeDTO exchangeCurrency(String baseCode, double amount) throws IOException {
+        // API 요청
         URL url = new URL(URL + "?base="+ baseCode + "&amount=" + amount);
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
         request.connect();
 
-        // Convert to JSON
+        // JSON -> String 데이터 파싱
         JsonParser jp = new JsonParser();
         JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
         JsonObject jsonobj = root.getAsJsonObject();
